@@ -227,7 +227,7 @@ class Meson:
         return os.path.join(self.build_dir, self.get_target_filename(target))
 
     def get_target_filename(self, target):
-        if self.get_version()[1] >= 50:
+        if isinstance(target["filename"], (list, tuple)):
             return target['filename'][0]
         else:
             return target['filename']

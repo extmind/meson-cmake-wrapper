@@ -44,6 +44,7 @@ class NinjaBackend:
     def get_target(self, target_name):
         target = next((t for t in self.meson.get_targets() if t['name'] == target_name), None)
         if target:
-            return target['filename']
+            filename = target['filename'][0] if isinstance(target['filename'], (list, tuple)) else target['filename']
+            return os.path.relpath(filename)
 
         return target_name

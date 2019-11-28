@@ -487,9 +487,10 @@ class CMakeWrapper:
             for include_dir in self.meson.get_include_directories(target):
                 ETree.SubElement(compiler, 'Add', {'directory': include_dir})
 
+            target = self.meson.backend.get_target(target['name'])
             make_commands = ETree.SubElement(build_target, 'MakeCommands')
-            ETree.SubElement(make_commands, 'Build', {'command': self.meson.backend.path + ' -v ' + self.meson.backend.get_target(target['name'])})
-            ETree.SubElement(make_commands, 'CompileFile', {'command': self.meson.backend.path + ' -v ' + self.meson.backend.get_target(target['name'])})
+            ETree.SubElement(make_commands, 'Build', {'command': self.meson.backend.path + ' -v ' + target})
+            ETree.SubElement(make_commands, 'CompileFile', {'command': self.meson.backend.path + ' -v ' + target})
             ETree.SubElement(make_commands, 'Clean', {'command': self.meson.backend.path + ' -v clean'})
             ETree.SubElement(make_commands, 'DistClean', {'command': self.meson.backend.path + ' -v clean'})
 
